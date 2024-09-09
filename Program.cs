@@ -1,10 +1,12 @@
 using BlazorTestProject.Components;
+using Blazored.LocalStorage;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+                .AddInteractiveServerComponents();
+builder.Services.AddBlazoredLocalStorage();
 
 var app = builder.Build();
 
