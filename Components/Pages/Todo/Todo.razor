@@ -3,29 +3,37 @@
 
 @inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 
-<h1 class="todo-title">Todo List (@todos.Count(todo => !todo.IsDone))</h1>
+<PageTitle>Todo</PageTitle>
 
-<div class="todo-container">
-  <div class="todo-add-block">
-    <input class="todo-add-field" @bind="newTodo" placeholder="Add new task" />
-    <button class="todo-add-button" @onclick="AddTodo">Add Todo</button>
-  </div>
-  @if (!hasLoadedTodos)
-  {
-    <div>Loading ...</div>
-  }
-  else
-  {
-    <ul>
-      @foreach (var todo in todos)
-      {
-        <li>
-          <input type="checkbox" @bind="todo.IsDone" @bind:after="SaveListToStorage" />
-          <input @bind="todo.Title" @bind:after="SaveListToStorage" />
-        </li>
-      }
-    </ul>
-  }
+<h1>Todo</h1>
+
+<div class="style-variables">
+
+  <section class="todo-container">
+    <h2 class="todo-title">Todo List (@todos.Count(todo => !todo.IsDone))</h2>
+
+    <div class="todo-add-block">
+      <input class="todo-add-field" @bind="newTodo" placeholder="Add new task" />
+      <button class="todo-add-button" @onclick="AddTodo">Add Todo</button>
+    </div>
+
+    @if (!hasLoadedTodos)
+    {
+      <div>Loading ...</div>
+    }
+    else
+    {
+      <div class="todo-list">
+        @foreach (var todo in todos)
+        {
+          <div>
+            <input type="checkbox" @bind="todo.IsDone" @bind:after="SaveListToStorage" />
+            <input @bind="todo.Title" @bind:after="SaveListToStorage" />
+          </div>
+        }
+      </div>
+    }
+  </section>
 </div>
 
 
