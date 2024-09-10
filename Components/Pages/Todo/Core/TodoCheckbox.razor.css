@@ -29,7 +29,7 @@
   background-color: #ccc;
 }
 .todo-checkbox input:checked ~ .checkmark {
-  background-color: #2196f3;
+  background-color: var(--);
 }
 .checkmark:after {
   content: "";
