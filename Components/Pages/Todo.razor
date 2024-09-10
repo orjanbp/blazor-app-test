@@ -1,6 +1,8 @@
 @page "/todo"
 @rendermode InteractiveServer
 
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+
 <h1>Todo (@todos.Count(todo => !todo.IsDone))</h1>
 
 <div>
@@ -8,17 +10,26 @@
   <button @onclick="AddTodo">Add Todo</button>
 </div>
 
-<ul>
-  @foreach (var todo in todos)
-  {
-    <li>
-      <input type="checkbox" @bind="todo.IsDone" />
-      <input @bind="todo.Title" />
-    </li>
-  }
-</ul>
+@if (!hasLoadedTodos)
+{
+  <div>Loading ...</div>
+}
+else
+{
+  <ul>
+    @foreach (var todo in todos)
+    {
+      <li>
+        <input type="checkbox" @bind="todo.IsDone" />
+        <input @bind="todo.Title" />
+      </li>
+    }
+  </ul>
+}
+
 
 @code {
+  private bool hasLoadedTodos = false;
   private List<TodoItem> todos = new();
   string newTodo = "";
 
@@ -28,6 +39,17 @@
     {
       todos.Add(new TodoItem { Title = newTodo });
       newTodo = string.Empty;
+      LocalStorage.SetItemAsync<List<TodoItem>>("todos", todos);
+    }
+  }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      todos = await LocalStorage.GetItemAsync<List<TodoItem>>("todos") ?? [];
+      hasLoadedTodos = true;
+      this.StateHasChanged();
     }
   }
 }
