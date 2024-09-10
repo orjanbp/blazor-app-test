@@ -28,7 +28,7 @@
         @foreach (var todo in todos)
         {
           <div class="todo-element">
-            <TodoCheckbox isDone="todo.IsDone" OnChange="SaveListToStorage" />
+            <TodoCheckbox @bind-Value="todo.IsDone" OnChange="SaveListToStorage" />
             <input class="todo-title-field" @bind="todo.Title" @bind:after="SaveListToStorage" />
           </div>
         }

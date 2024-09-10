@@ -1,12 +1,25 @@
-
 <label class="todo-checkbox">
-  <input type="checkbox" @bind="isDone" @bind:after="OnChange" />
+  <input type="checkbox" @bind="Value" @bind:after="OnChange" />
   <span class="checkmark"></span>
 </label>
 
 @code {
+  private bool _value;
+
   [Parameter, EditorRequired]
-  public bool isDone { get; set; } = false;
+  public bool Value
+  {
+    get => _value;
+    set
+    {
+      if (_value == value) return;
+      _value = value;
+      ValueChanged.InvokeAsync(value);
+    }
+  }
+
+  [Parameter]
+  public EventCallback<bool> ValueChanged { get; set; }
 
   [Parameter]
   public Action OnChange { get; set; } = () => { };
