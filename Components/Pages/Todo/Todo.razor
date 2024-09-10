@@ -27,7 +27,7 @@
       <div class="todo-list">
         @foreach (var todo in todos)
         {
-          <div class="todo-element">
+          <div class="todo-element @doneClass(todo)">
             <TodoCheckbox @bind-Value="todo.IsDone" OnChange="SaveListToStorage" />
             <input class="todo-title-field" @bind="todo.Title" @bind:after="SaveListToStorage" />
           </div>
@@ -42,6 +42,8 @@
   private bool hasLoadedTodos = false;
   private List<TodoItem> todos = new();
   string newTodo = "";
+
+  string doneClass(TodoItem todo) => todo.IsDone ? "todo-done" : "";
 
   void AddTodo()
   {

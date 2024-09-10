@@ -7,6 +7,7 @@ body {
   --inputBorder: #cfd8dc;
   --colorPrimary: #910a67;
   --fontColor: #030637;
+  --fontColorDisabled: #d0d1de;
 }
 
 a,

@@ -55,8 +55,14 @@
   padding: 0px 16px;
   border: 1px solid transparent;
   border-radius: 2px;
+  color: var(--fontColor);
 }
 .todo-title-field:focus {
   border-color: var(--inputBorder);
   background-color: var(--inputBackground);
+}
+
+.todo-element.todo-done > .todo-title-field {
+  text-decoration: line-through;
+  color: var(--fontColorDisabled);
 }
