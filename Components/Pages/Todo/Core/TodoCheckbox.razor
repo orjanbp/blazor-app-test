@@ -1,0 +1,13 @@
+
+<label class="todo-checkbox">
+  <input type="checkbox" @bind="isDone" @bind:after="OnChange" />
+  <span class="checkmark"></span>
+</label>
+
+@code {
+  [Parameter, EditorRequired]
+  public bool isDone { get; set; } = false;
+
+  [Parameter]
+  public Action OnChange { get; set; } = () => { };
+}
