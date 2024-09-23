@@ -1,0 +1,72 @@
+@page "/todo"
+@rendermode InteractiveWebAssembly
+
+@using BlazorTestProject.Client.Pages.Todo.Core;
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+
+<PageTitle>Todo</PageTitle>
+
+<h1>Todo</h1>
+
+<div class="style-variables">
+
+  <section class="todo-container">
+    <h2 class="todo-title">Todo List (@todos.Count(todo => !todo.IsDone))</h2>
+
+    <div class="todo-add-block">
+      <input class="todo-add-field" @bind="newTodo" placeholder="Add new task" />
+      <button class="todo-add-button" @onclick="AddTodo">Add Todo</button>
+    </div>
+
+    @if (!hasLoadedTodos)
+    {
+      <div>Loading ...</div>
+    }
+    else
+    {
+      <div class="todo-list">
+        @foreach (var todo in todos)
+        {
+          <div class="todo-element @doneClass(todo)">
+            <TodoCheckbox @bind-Value="todo.IsDone" OnChange="SaveListToStorage" />
+            <input class="todo-title-field" @bind="todo.Title" @bind:after="SaveListToStorage" />
+          </div>
+        }
+      </div>
+    }
+  </section>
+</div>
+
+
+@code {
+  private bool hasLoadedTodos = false;
+  private List<TodoItem> todos = new();
+  string newTodo = "";
+
+  string doneClass(TodoItem todo) => todo.IsDone ? "todo-done" : "";
+
+  void AddTodo()
+  {
+    if (!string.IsNullOrWhiteSpace(newTodo))
+    {
+      todos.Add(new TodoItem { Title = newTodo });
+      newTodo = string.Empty;
+      LocalStorage.SetItemAsync<List<TodoItem>>("todos", todos);
+    }
+  }
+
+  void SaveListToStorage()
+  {
+    LocalStorage.SetItemAsync<List<TodoItem>>("todos", todos);
+  }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender)
+    {
+      todos = await LocalStorage.GetItemAsync<List<TodoItem>>("todos") ?? [];
+      hasLoadedTodos = true;
+      this.StateHasChanged();
+    }
+  }
+}
