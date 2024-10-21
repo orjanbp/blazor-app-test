@@ -1,4 +1,4 @@
-using BlazorTestProject.Client.Pages;
+using Blazored.LocalStorage;
 using BlazorTestProject.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddBlazoredLocalStorage();
 
 var app = builder.Build();
 
@@ -30,4 +32,4 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(BlazorTestProject.Client._Imports).Assembly);
 
-app.Run();
+await app.RunAsync();
