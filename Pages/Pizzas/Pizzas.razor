@@ -1,0 +1,37 @@
+@page "/pizza"
+@attribute [StreamRendering]
+
+@using BlazingPizza.Data;
+@using BlazorTestProject.Services;
+
+@inject IPizzaService PizzaService;
+
+<main class="pizza-main">
+  <h1>Blazing Pizzas</h1>
+  <div class="pizza-cards-grid">
+    @if (todaysPizzas != null)
+    {
+      @foreach (var pizza in todaysPizzas)
+      {
+        <div class="pizza-card" style="background-image:url('@pizza.ImageUrl')">
+          <div class="card-info">
+            <span class="card-title">@pizza.Name</span>
+            <span class="card-description">@pizza.Description</span>
+            <span class="card-price">@pizza.Price</span>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</main>
+
+@code {
+  private IEnumerable<Pizza> todaysPizzas = Array.Empty<Pizza>();
+  protected override async Task OnInitializedAsync()
+  {
+    // Simulate asynchronous loading to demonstrate streaming rendering
+    await Task.Delay(500);
+
+    todaysPizzas = await PizzaService.GetPizzasAsync();
+  }
+}
