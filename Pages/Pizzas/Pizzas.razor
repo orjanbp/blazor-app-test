@@ -2,6 +2,7 @@
 @attribute [StreamRendering]
 
 @using BlazingPizza.Data;
+@using BlazorTestProject.Components.Pizza.PizzaCard
 @using BlazorTestProject.Services;
 
 @inject IPizzaService PizzaService;
@@ -17,13 +18,7 @@
     <div class="pizza-cards-grid">
       @foreach (var pizza in todaysPizzas)
       {
-        <div class="pizza-card" style="background-image:url('@pizza.ImageUrl')">
-          <div class="card-info">
-            <span class="card-title">@pizza.Name</span>
-            <span class="card-description">@pizza.Description</span>
-            <span class="card-price">@pizza.Price</span>
-          </div>
-        </div>
+        <PizzaCard Pizza="pizza" />
       }
     </div>
   }
