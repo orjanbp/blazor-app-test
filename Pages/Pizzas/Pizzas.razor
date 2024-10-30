@@ -8,9 +8,13 @@
 
 <main class="pizza-main">
   <h1>Blazing Pizzas</h1>
-  <div class="pizza-cards-grid">
-    @if (todaysPizzas != null)
-    {
+  @if (todaysPizzas == null)
+  {
+    <p><em>Loading...</em></p>
+  }
+  else
+  {
+    <div class="pizza-cards-grid">
       @foreach (var pizza in todaysPizzas)
       {
         <div class="pizza-card" style="background-image:url('@pizza.ImageUrl')">
@@ -21,12 +25,12 @@
           </div>
         </div>
       }
-    }
-  </div>
+    </div>
+  }
 </main>
 
 @code {
-  private IEnumerable<Pizza> todaysPizzas = Array.Empty<Pizza>();
+  private Pizza[]? todaysPizzas;
   protected override async Task OnInitializedAsync()
   {
     // Simulate asynchronous loading to demonstrate streaming rendering

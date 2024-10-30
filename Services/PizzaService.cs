@@ -4,12 +4,12 @@ using BlazingPizza.Data;
 
 public interface IPizzaService
 {
-  Task<IEnumerable<Pizza>> GetPizzasAsync();
+  Task<Pizza[]> GetPizzasAsync();
 }
 
 public class PizzaService : IPizzaService
 {
-  private readonly IEnumerable<Pizza> Data;
+  private readonly Pizza[] Data;
   public PizzaService()
   {
     Data = [
@@ -57,5 +57,5 @@ public class PizzaService : IPizzaService
       }
     ];
   }
-  public Task<IEnumerable<Pizza>> GetPizzasAsync() => Task.FromResult(Data);
+  public Task<Pizza[]> GetPizzasAsync() => Task.FromResult(Data);
 }
