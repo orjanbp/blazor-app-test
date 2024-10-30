@@ -2,11 +2,12 @@
 @using BlazorTestProject.Components.Shared.Card
 
 <Card>
-  <div class="pizza-card" style="background-image:url('@Pizza.ImageUrl')">
-    <div class="card-info">
-      <span class="card-title">@Pizza.Name</span>
-      <span class="card-description">@Pizza.Description</span>
-      <span class="card-price">@Pizza.Price</span>
+  <div class="pizza-card-body">
+    <div class="pizza-card-image" style="background-image:url('@Pizza.ImageUrl')" />
+    <div class="pizza-card-info">
+      <h4 class="pizza-card-title">@Pizza.Name</h4>
+      <p class="pizza-card-description">@Pizza.Description</p>
+      <span class="pizza-card-price">$ @Pizza.Price</span>
     </div>
   </div>
 </Card>
